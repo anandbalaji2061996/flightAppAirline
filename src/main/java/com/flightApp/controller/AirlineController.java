@@ -25,7 +25,7 @@ import com.flightApp.service.AirlineService;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("/admin/api/v1.0/airline")
+@RequestMapping("/api3/v1.0/admin/airline")
 public class AirlineController {
 
     private static final Logger logger = LogManager.getLogger(AirlineController.class);

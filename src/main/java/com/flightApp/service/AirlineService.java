@@ -66,7 +66,7 @@ public class AirlineService {
 	}
 
 	public String deleteAirlineDetails(String name) throws AirlineNotFoundException {
-		String baseUrl = "http://localhost:8082/admin/api/v1.0/flight/airline/airlineDelete/" + name;
+		String baseUrl = "http://localhost:8082/api2/v1.0/admin/flight/airline/airlineDelete/" + name;
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;
