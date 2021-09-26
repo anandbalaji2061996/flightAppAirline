@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,9 +28,13 @@ public class AirlineService {
 	private static final Logger logger = LogManager.getLogger(AirlineService.class);
 
 	private final AirlineRepository airlineRepository;
+	
+	@Autowired
+	private DiscoveryClient discoveryClient;
 
 	public AirlineService(AirlineRepository airlineRepository) {
 		this.airlineRepository = airlineRepository;
+		//this.discoveryClient = discoveryClient;
 	}
 
 	public Airline registerAirline(Airline details) throws BadRequestException, AirlineAlreadyFoundException {
@@ -66,7 +72,7 @@ public class AirlineService {
 	}
 
 	public String deleteAirlineDetails(String name) throws AirlineNotFoundException {
-		String baseUrl = "http://localhost:8082/api2/v1.0/admin/flight/airline/airlineDelete/" + name;
+		String baseUrl = discoveryClient.getInstances("FLIGHTAPP-ADMIN").get(0).getUri() + "/api2/v1.0/admin/flight/airline/airlineDelete/" + name;
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = null;

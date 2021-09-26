@@ -10,10 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 import com.flightApp.DAO.Airline;
 import com.flightApp.exception.AirlineAlreadyFoundException;
@@ -27,6 +29,9 @@ public class AirlineDetailServiceTest {
 
 	@Autowired
 	AirlineRepository airlineInterface;
+	
+	@Mock
+	DiscoveryClient discoveryClient;
 
 	private AirlineService service;
 
