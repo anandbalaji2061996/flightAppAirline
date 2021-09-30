@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
@@ -25,7 +25,7 @@ import com.flightApp.repository.AirlineRepository;
 @Service
 public class AirlineService {
 
-	private static final Logger logger = LogManager.getLogger(AirlineService.class);
+	private static final Logger logger = LoggerFactory.getLogger(AirlineService.class);
 
 	private final AirlineRepository airlineRepository;
 	
