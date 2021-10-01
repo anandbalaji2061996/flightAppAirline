@@ -51,6 +51,12 @@ public class AirlineController {
     	return new ResponseEntity<List<String>>(service.getAllAirlineNames(), HttpStatus.OK);
     }
     
+    @GetMapping("/names/{name}")
+    public ResponseEntity<Airline> getAirlineByName(@PathVariable("name") String name) throws AirlineNotFoundException {
+    	logger.info("Get Airline by name" + name);
+    	return new ResponseEntity<>(service.getAirlineByName(name), HttpStatus.OK);
+    }
+    
     @PutMapping("/update/{name}")
     public ResponseEntity<Airline> updateAirline(@PathVariable("name") String name, @RequestBody Airline airline) throws AirlineNotFoundException {
     	logger.info("Update Airline :" + name);

@@ -105,6 +105,17 @@ public class AirlineDetailServiceTest {
 	}
 	
 	@Test
+	public void getAirlineByNameTest() throws BadRequestException, AirlineAlreadyFoundException, AirlineNotFoundException {
+		service.registerAirline(details);
+
+		assertTrue(service.getAirlineByName(details.getName()).getName() == "airlineName");
+		
+		Throwable thrown = catchThrowable(() -> service.getAirlineByName("test"));
+
+		assertThat(thrown).isInstanceOf(AirlineNotFoundException.class);
+	}
+	
+	@Test
 	public void deleteAirlineTest() throws AirlineNotFoundException, BadRequestException, AirlineAlreadyFoundException {
 		Airline response = service.registerAirline(details);
 		assertNotNull(airlineInterface.findById(response.getName()));

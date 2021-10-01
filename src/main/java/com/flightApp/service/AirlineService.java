@@ -70,6 +70,14 @@ public class AirlineService {
 		airlineRepository.findAll().forEach(name -> names.add(name.getName()));
 		return names;
 	}
+	
+	public Airline getAirlineByName(String name) throws AirlineNotFoundException{
+		Airline response = airlineRepository.findById(name).orElse(null);
+		if(response == null) {
+			throw new AirlineNotFoundException("Airline not found");
+		}
+		return response;
+	}
 
 	public String deleteAirlineDetails(String name) throws AirlineNotFoundException {
 		String baseUrl = discoveryClient.getInstances("FLIGHTAPP-ADMIN").get(0).getUri() + "/api2/v1.0/admin/flight/airline/airlineDelete/" + name;
