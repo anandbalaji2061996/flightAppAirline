@@ -52,7 +52,7 @@ public class AirlineController {
     }
     
     @GetMapping("/names/{name}")
-    public ResponseEntity<Airline> getAirlineByName(@PathVariable("name") String name) throws AirlineNotFoundException {
+    public ResponseEntity<Airline> getAirlineByName(@PathVariable("name") String name) {
     	logger.info("Get Airline by name" + name);
     	return new ResponseEntity<>(service.getAirlineByName(name), HttpStatus.OK);
     }

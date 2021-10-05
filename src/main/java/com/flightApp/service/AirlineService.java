@@ -27,6 +27,7 @@ public class AirlineService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AirlineService.class);
 
+	@Autowired
 	private final AirlineRepository airlineRepository;
 	
 	@Autowired
@@ -71,12 +72,8 @@ public class AirlineService {
 		return names;
 	}
 	
-	public Airline getAirlineByName(String name) throws AirlineNotFoundException{
-		Airline response = airlineRepository.findById(name).orElse(null);
-		if(response == null) {
-			throw new AirlineNotFoundException("Airline not found");
-		}
-		return response;
+	public Airline getAirlineByName(String name) {
+		return airlineRepository.findById(name).orElse(null);
 	}
 
 	public String deleteAirlineDetails(String name) throws AirlineNotFoundException {
