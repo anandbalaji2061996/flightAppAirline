@@ -7,8 +7,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.flightapp")
-@EnableJpaRepositories(basePackages = "com.flightapp.repository")
+@EntityScan(basePackages = "com.flightApp")
+@EnableJpaRepositories(basePackages = "com.flightApp.repository")
 @EnableEurekaClient
 public class FlightAppAirlineServiceApplication {
 
