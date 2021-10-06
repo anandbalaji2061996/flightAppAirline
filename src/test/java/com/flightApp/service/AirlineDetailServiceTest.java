@@ -3,18 +3,17 @@ package com.flightApp.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 import com.flightApp.DAO.Airline;
 import com.flightApp.exception.AirlineAlreadyFoundException;
@@ -28,9 +27,6 @@ public class AirlineDetailServiceTest {
 
 	@Autowired
 	AirlineRepository airlineInterface;
-	
-	@Mock
-	DiscoveryClient discoveryClient;
 
 	private AirlineService service;
 
@@ -113,13 +109,13 @@ public class AirlineDetailServiceTest {
 
 	}
 	
-//	@Test
-//	public void deleteAirlineTest() throws AirlineNotFoundException, BadRequestException, AirlineAlreadyFoundException {
-//		Airline response = service.registerAirline(details);
-//		assertNotNull(airlineInterface.findById(response.getName()));
-//		
-//		assertEquals("Success", service.deleteAirlineDetails(response.getName()));
-//		assertFalse(airlineInterface.findById(response.getName()).isPresent());
-//	}
+	@Test
+	public void deleteAirlineTest() throws AirlineNotFoundException, BadRequestException, AirlineAlreadyFoundException {
+		Airline response = service.registerAirline(details);
+		assertNotNull(airlineInterface.findById(response.getName()));
+		
+		assertEquals("Success", service.deleteAirlineDetails(response.getName()));
+		assertFalse(airlineInterface.findById(response.getName()).isPresent());
+	}
 	
 }

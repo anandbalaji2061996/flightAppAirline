@@ -1,20 +1,11 @@
 package com.flightApp.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.flightApp.DAO.Airline;
 import com.flightApp.exception.AirlineAlreadyFoundException;
@@ -27,15 +18,10 @@ public class AirlineService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AirlineService.class);
 
-	@Autowired
 	private final AirlineRepository airlineRepository;
-	
-	@Autowired
-	private DiscoveryClient discoveryClient;
 
 	public AirlineService(AirlineRepository airlineRepository) {
 		this.airlineRepository = airlineRepository;
-		//this.discoveryClient = discoveryClient;
 	}
 
 	public Airline registerAirline(Airline details) throws BadRequestException, AirlineAlreadyFoundException {
@@ -71,35 +57,19 @@ public class AirlineService {
 		airlineRepository.findAll().forEach(name -> names.add(name.getName()));
 		return names;
 	}
-	
+
 	public Airline getAirlineByName(String name) {
 		return airlineRepository.findById(name).orElse(null);
 	}
 
 	public String deleteAirlineDetails(String name) throws AirlineNotFoundException {
-		String baseUrl = discoveryClient.getInstances("FLIGHTAPP-ADMIN").get(0).getUri() + "/api2/v1.0/admin/flight/airline/airlineDelete/" + name;
-
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = null;
-		try {
-			response = restTemplate.exchange(baseUrl, HttpMethod.DELETE, getHeaders(), String.class);
-			System.out.println(response.getBody());
-			if (!airlineRepository.findById(name).isPresent()) {
-				logger.warn("Airline details not found!");
-			}
-			airlineRepository.deleteById(name);
-
-			return "Success";
-		} catch (Exception ex) {
-			throw new AirlineNotFoundException(ex.getMessage());
+		if (airlineRepository.findById(name) == null) {
+			throw new AirlineNotFoundException("Airline Details not found");
 		}
+		airlineRepository.deleteById(name);
 
-	}
+		return "Success";
 
-	private static HttpEntity<?> getHeaders() throws IOException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		return new HttpEntity<>(headers);
 	}
 
 }
