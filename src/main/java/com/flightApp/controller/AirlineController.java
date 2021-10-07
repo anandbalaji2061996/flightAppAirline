@@ -2,6 +2,8 @@ package com.flightApp.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class AirlineController {
     private AirlineService service;
     
     @PostMapping(path = "/register", produces = {"application/json"})
-    public ResponseEntity<Airline> registerAirline(@RequestBody Airline airline) throws BadRequestException, AirlineAlreadyFoundException {
+    public ResponseEntity<Airline> registerAirline(@Valid @RequestBody Airline airline) throws BadRequestException, AirlineAlreadyFoundException {
     	logger.info("Register Airline");
     	return new ResponseEntity<Airline>(service.registerAirline(airline), HttpStatus.CREATED);    	
     }
@@ -52,19 +54,19 @@ public class AirlineController {
     }
     
     @GetMapping(path = "/names/{name}", produces = {"application/json"})
-    public ResponseEntity<Airline> getAirlineByName(@PathVariable("name") String name) {
+    public ResponseEntity<Airline> getAirlineByName(@Valid @PathVariable("name") String name) {
     	logger.info("Get Airline by name" + name);
     	return new ResponseEntity<>(service.getAirlineByName(name), HttpStatus.OK);
     }
     
     @PutMapping(path = "/update/{name}", produces = {"application/json"})
-    public ResponseEntity<Airline> updateAirline(@PathVariable("name") String name, @RequestBody Airline airline) throws AirlineNotFoundException {
+    public ResponseEntity<Airline> updateAirline(@Valid @PathVariable("name") String name, @RequestBody Airline airline) throws AirlineNotFoundException {
     	logger.info("Update Airline :" + name);
     	return new ResponseEntity<Airline>(service.updateAirline(name, airline),HttpStatus.ACCEPTED);    	
     }
     
     @DeleteMapping(path = "/delete/{name}", produces = {"application/text"})
-    public ResponseEntity<String> deleteAirline(@PathVariable("name") String name) throws AirlineNotFoundException {
+    public ResponseEntity<String> deleteAirline(@Valid @PathVariable("name") String name) throws AirlineNotFoundException {
     	logger.info("Delete Airline :" + name);
     	return new ResponseEntity<>(service.deleteAirlineDetails(name),HttpStatus.OK);    	
     }

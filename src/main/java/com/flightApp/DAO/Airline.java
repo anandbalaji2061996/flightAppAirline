@@ -3,19 +3,17 @@ package com.flightApp.DAO;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "airlineDetails")
 public class Airline {
 
 	@Id
-	@NonNull
 	private String name;
-	@NonNull
+	@NotEmpty(message = "Address should not be empty")
 	private String address;
-	@NonNull
+	@NotEmpty(message = "Contact number should not be empty")
 	private String contactNumber;
 	
 	public String getName() {
