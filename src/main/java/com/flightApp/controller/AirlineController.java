@@ -25,7 +25,7 @@ import com.flightApp.exception.AirlineNotFoundException;
 import com.flightApp.exception.BadRequestException;
 import com.flightApp.service.AirlineService;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api3/v1.0/admin/airline")
 public class AirlineController {
